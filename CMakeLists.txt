@@ -12,6 +12,7 @@ find_package(nlohmann_json REQUIRED)
 add_executable(blockchain
     src/main.cpp
     src/crypto/hash.cpp
+    src/crypto/keys.cpp
 )
 
 # Link OpenSSL

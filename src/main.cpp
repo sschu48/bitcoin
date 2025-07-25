@@ -1,23 +1,32 @@
 #include <iostream>
 #include "crypto/hash.h"
+#include "crypto/keys.h"
 
 int main() {
-    std::cout << "Bitcoin - hash function test" << std::endl;
+    std::cout << "Bitcoin - key demo" << std::endl;
 
-    // test basic functionality
-    std::string message = "hello world";
-    std::cout << "message: " << message << std::endl;
+    /// generate a private key
+    crypto::PrivateKey private_key;
+    std::string priv_hex = private_key.to_hex();
+    std::cout << "Private Key: " << priv_hex << std::endl;
+    
+    // generate public key from it
+    crypto::PublicKey public_key1(private_key);
+    std::cout << "Public Key 1: " << public_key1.to_hex() << std::endl;
 
-    // test sha-256
-    std::string hash1 = crypto::Hash::sha256(message);
-    std::cout << "SHA256:           " << hash1 << std::endl;
+    // now recreate the same private key from the hex
+    crypto::PrivateKey same_private_key(priv_hex);
+    crypto::PublicKey public_key2(same_private_key);
+    std::cout << "Public Key 2: " << public_key2.to_hex() << std::endl;
 
-    // test double sha-256
-    std::string hash2 = crypto::Hash::double_sha256(message);
-    std::cout << "Double SHA-256:   " << hash2 << std::endl;
+    // they should be identical
+    bool same = (public_key1.to_hex() == public_key2.to_hex());
+    std::cout << "Same public keys? " << (same ? "Yes" : "No") << std::endl;
 
-    // show difference 
-    std::cout << "Different? " << (hash1 != hash2 ? "Yes" : "No") << std::endl;
+    std::cout << "\nwhat happened:" << std::endl;
+    std::cout << "- same private key always produces the same public key" << std::endl;
+    std::cout << "- different private keys produce different public keys" << std::endl;
+    std::cout << "- this is the foundation of bitcoin signatures" << std::endl;
 
     return 0;
 }
