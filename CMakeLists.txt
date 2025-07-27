@@ -13,6 +13,9 @@ add_executable(blockchain
     src/main.cpp
     src/crypto/hash.cpp
     src/crypto/keys.cpp
+    src/crypto/base58.cpp
+    src/transaction/transaction.cpp
+    src/blockchain/block.cpp
 )
 
 # Link OpenSSL

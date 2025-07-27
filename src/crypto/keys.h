@@ -21,6 +21,10 @@ public:
 
     // get the raw bytes
     const std::vector<unsigned char>& get_bytes() const { return key_data;}
+
+    // DIGITAL SIGNATURES
+    // Sign a message with private key
+    std::string sign_message(const std::string& message) const;
 };
 
 class PublicKey {
@@ -39,6 +43,14 @@ public:
 
     // get the raw bytes
     const std::vector<unsigned char>& get_bytes() const { return key_data;}
+
+    // DIGITAL SIGNATURES - Verify signatures made  by the private key
+    // Verify that a signature was made by the private key that matches this public key
+    bool verify_signature(const std::string& message, const std::string& signature) const;
+
+    // BITCOIN ADDRESS GENERATION
+    // Convert this public key into a Bitcoin address
+    std::string to_bitcoin_address() const;
 };
 
 }
